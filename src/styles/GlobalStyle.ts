@@ -25,13 +25,11 @@ const GlobalStyle = createGlobalStyle`
     
     input {
         width: 100%;
-        border: none;
+        border: 1px solid gray;
         height: 50px;
         padding: 0 20px;
         margin-bottom: 10px;
-        background-color: #fff;
-        border: none;
-        border-radius: 10px;
+        border-radius: 20px;
         font-size: 16px;
         box-sizing: border-box;
         color: #27282a;
