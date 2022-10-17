@@ -31,41 +31,53 @@ const SubmitBtn = styled.button`
   text-align: center;
   color: white;
   margin-top: 25px;
+
+  &.disabled {
+    background-color: #a5c4ff;
+    color: white
+  }
+
 `;
 
-const GoSignUp = styled.div`
+const ErrorText = styled.div`
+  color: red;
+  margin-top: 5px;
+  margin-bottom: 10px;
   font-size: 12px;
-  text-decoration: underline;
-  margin-top: 15px;
-`;
+`
 
 function SignUp() {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-  const { email, password } = form;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  let [is_email_disable, setIsEmalDiable] = useState(true); 
+  let [is_password_disable, setIsPasswordDiable] = useState(true); 
 
-  let is_disable = true;
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "email" && value.includes("@")) {
-      is_disable = false;
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input_email = e.target.value;
+    if (input_email.includes("@")) {
+      setIsEmalDiable(false)
+    }else{
+      
+      setIsEmalDiable(true)
     }
-
-    if (name === "password" && value.length > 7) {
-      is_disable = false;
-    }
-
-    console.log(is_disable);
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    setEmail(input_email);
   };
 
+
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input_password = e.target.value;
+    if (input_password.length >= 8) {
+      setIsPasswordDiable(false)
+    }else{
+      setIsPasswordDiable(true)
+    }
+    setPassword(input_password);
+  };
+
+
+
+  
+  const history = useHistory();
   const clickSignUp = () => {
     try {
       const option = {
@@ -75,8 +87,8 @@ function SignUp() {
           "Content-Type": "application/json",
         },
         data: {
-          email: form.email,
-          password: form.password,
+          email,
+          password,
         },
       };
       axios(option).then((response) => {
@@ -86,11 +98,19 @@ function SignUp() {
           return;
         }
 
-        console.log(access_token);
+        // access_token을 저장해주고 로그인 페이지로 이동,
+        localStorage.setItem('access_token', access_token);
+        if(confirm("회원가입에 성공하셨습니다!")){
+          history.push('/')
+        }
+      }).catch(error => {
+        alert("회원가입 실패 error : " + JSON.stringify(error));
       });
+
+
     } catch (error) {
       //응답 실패
-      console.error(error);
+      alert("회원가입 실패 error : " + JSON.stringify(error))
     }
   };
 
@@ -103,18 +123,19 @@ function SignUp() {
         type="text"
         name="email"
         value={email}
-        onChange={onChange}
-        placeholder="아이디"
+        onChange={onChangeEmail}
+        placeholder="이메일"
       />
+      <ErrorText>{!is_email_disable || email == '' ? null : '올바르지 않은 이메일 형식입니다!'}</ErrorText>
       <PassWordInput
         type="password"
         name="password"
         value={password}
-        onChange={onChange}
+        onChange={onChangePassword}
         placeholder="비밀번호"
       />
-
-      <SubmitBtn disabled={is_disable} onClick={clickSignUp}>
+      <ErrorText>{!is_password_disable || password == '' ? null : '비밀번호는 8글자 이상이어야됩니다.'}</ErrorText>
+      <SubmitBtn disabled={is_email_disable || is_password_disable} className={is_email_disable || is_password_disable ? 'disabled' : ''}  onClick={clickSignUp}>
         회원가입
       </SubmitBtn>
     </Wrapper>
