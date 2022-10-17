@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
@@ -41,8 +41,14 @@ function Login() {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  let [is_email_disable, setIsEmalDiable] = useState(true); 
-  let [is_password_disable, setIsPasswordDiable] = useState(true); 
+
+  useEffect(()=>{
+    const is_access_token = localStorage.getItem('access_token')
+    if(is_access_token){
+      history.push('todo');
+      return;
+    }
+  }, []);
 
   const clickLogin = () => {
     try {
@@ -86,23 +92,12 @@ function Login() {
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input_email = e.target.value;
-    if (input_email.includes("@")) {
-      setIsEmalDiable(false)
-    }else{
-      
-      setIsEmalDiable(true)
-    }
     setEmail(input_email);
   };
 
 
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input_password = e.target.value;
-    if (input_password.length >= 8) {
-      setIsPasswordDiable(false)
-    }else{
-      setIsPasswordDiable(true)
-    }
     setPassword(input_password);
   };
 
