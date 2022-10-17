@@ -98,8 +98,7 @@ function SignUp() {
           return;
         }
 
-        // access_token을 저장해주고 로그인 페이지로 이동,
-        localStorage.setItem('access_token', access_token);
+        // 로그인 페이지로 이동,
         if(confirm("회원가입에 성공하셨습니다!")){
           history.push('/')
         }

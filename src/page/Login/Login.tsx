@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
@@ -33,16 +35,94 @@ const GoSignUp = styled.div`
   margin-top: 15px;
 `;
 
+
+
 function Login() {
   const history = useHistory();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  let [is_email_disable, setIsEmalDiable] = useState(true); 
+  let [is_password_disable, setIsPasswordDiable] = useState(true); 
+
+  const clickLogin = () => {
+    try {
+      const option = {
+        url: " https://pre-onboarding-selection-task.shop/auth/signin",
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          email,
+          password,
+        },
+      };
+      axios(option).then((response) => {
+        const access_token = response.data.access_token;
+        if (!access_token) {
+          alert("로그인에 실패하셨습니다");
+          return;
+        }
+  
+        // access_token을 저장해주고 로그인 페이지로 이동,
+        localStorage.setItem('access_token', access_token);
+        
+        alert("로그인 성공");
+        history.push('/todo')
+
+
+      }).catch(error => {
+        alert("로그인 실패 error : " + JSON.stringify(error));
+      });
+  
+  
+    } catch (error) {
+      //응답 실패
+      alert("로그인 실패 error : " + JSON.stringify(error))
+    }
+  };
+
+  
+
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input_email = e.target.value;
+    if (input_email.includes("@")) {
+      setIsEmalDiable(false)
+    }else{
+      
+      setIsEmalDiable(true)
+    }
+    setEmail(input_email);
+  };
+
+
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input_password = e.target.value;
+    if (input_password.length >= 8) {
+      setIsPasswordDiable(false)
+    }else{
+      setIsPasswordDiable(true)
+    }
+    setPassword(input_password);
+  };
+
+
 
   return (
     <Wrapper>
       <Title>로그인</Title>
-      <IdInput type="text" placeholder="아이디" />
-      <PassWordInput type="password" placeholder="비밀번호" />
+      <IdInput type="text" 
+        name="email"
+        value={email}
+        onChange={onChangeEmail}
+        placeholder="아이디" />
 
-      <SubmitBtn>로그인</SubmitBtn>
+      <PassWordInput type="password" 
+        name="password"
+        value={password}
+        onChange={onChangePassword} placeholder="비밀번호" />
+
+      <SubmitBtn onClick={clickLogin}>로그인</SubmitBtn>
       <GoSignUp onClick={() => history.push("/sign-up")}>회원가입하기</GoSignUp>
     </Wrapper>
   );
