@@ -74,9 +74,6 @@ function SignUp() {
     setPassword(input_password);
   };
 
-
-
-  
   const history = useHistory();
   const clickSignUp = () => {
     try {
