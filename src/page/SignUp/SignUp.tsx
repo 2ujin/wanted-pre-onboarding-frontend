@@ -11,15 +11,19 @@ const Wrapper = styled.div`
 const Title = styled.div`
   font-weight: bold;
   font-size: 30px;
+  margin-left: 10px;
+  color: black;
 `;
 
-const SubTitle = styled.div`
-  font-size: 15px;
-  margin-top: 12px;
+const Desc = styled.div`
+  font-size: 14px;
+  color: #a1a1a1;
+  margin-left: 10px;
+  margin-top: 15px;
 `;
 
 const IdInput = styled.input`
-  margin-top: 80px;
+  margin-top: 30px;
 `;
 
 const PassWordInput = styled.input``;
@@ -44,21 +48,26 @@ const ErrorText = styled.div`
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 12px;
+`;
+
+const TitleImg = styled.img`
+  width: 90%;
+  margin-bottom: 10px;
 `
+
 
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  let [is_email_disable, setIsEmalDiable] = useState(true); 
+  let [is_email_disable, setIsEmailDiable] = useState(true); 
   let [is_password_disable, setIsPasswordDiable] = useState(true); 
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input_email = e.target.value;
     if (input_email.includes("@")) {
-      setIsEmalDiable(false)
-    }else{
-      
-      setIsEmalDiable(true)
+      setIsEmailDiable(false)
+    } else {
+      setIsEmailDiable(true)
     }
     setEmail(input_email);
   };
@@ -111,10 +120,12 @@ function SignUp() {
   };
 
   return (
-    <Wrapper>
-      <Title>회원가입</Title>
-      <SubTitle>당신을 환영합니다! 👋🏻👋🏻</SubTitle>
+    <>
+      <TitleImg src={`${process.env.PUBLIC_URL}/icon/sign-up.svg`} />
+      <Title>SIGN UP 👋🏻 </Title>
+      <Desc>당신을 환영합니다!</Desc>
 
+      <Wrapper>
       <IdInput
         type="text"
         name="email"
@@ -131,10 +142,11 @@ function SignUp() {
         placeholder="비밀번호"
       />
       <ErrorText>{!is_password_disable || password == '' ? null : '비밀번호는 8글자 이상이어야됩니다.'}</ErrorText>
-      <SubmitBtn disabled={is_email_disable || is_password_disable} className={is_email_disable || is_password_disable ? 'disabled' : ''}  onClick={clickSignUp}>
+        <SubmitBtn disabled={is_email_disable || is_password_disable} className={is_email_disable || is_password_disable ? 'disabled' : ''} onClick={clickSignUp}>
         회원가입
       </SubmitBtn>
     </Wrapper>
+    </>
   );
 }
 

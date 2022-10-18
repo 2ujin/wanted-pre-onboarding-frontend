@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     
     input {
         width: 100%;
-        border: 1px solid gray;
+        border: 1px solid #cdcdcd;
         height: 50px;
         padding: 0 20px;
         margin-bottom: 10px;

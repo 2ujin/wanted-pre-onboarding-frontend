@@ -6,10 +6,15 @@ const Wrapper = styled.div`
   /* text-align: center; */
 `;
 
-const Title = styled.div`
+const TitleWrapper = styled.div`
   font-weight: bold;
-  font-size: 30px;
-  margin-bottom: 60px;
+  font-size: 18px;
+  margin-bottom: 40px;
+  background: #f6f6f6;
+  border-radius: 8px;
+  box-shadow: 0 2px 2px 0 rgba(34, 34, 34, 0.1);
+  padding: 20px;
+  color: #404040ff;
 `;
 
 const ListItem = styled.div`
@@ -23,25 +28,39 @@ const ListItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &.is_complete{
+    text-decoration: line-through;
+    color: #404040;
+  }
 `;
 
 const CheckIcon = styled.img`
   width: 20px;
+  margin-left: 5px;
 `;
-
-const AddButton = styled.button`
-  width: 40%;
-`
 
 const TodoTextInput = styled.input`
   border: none;
   padding: 0;
   margin: 0;
+  height: 20px;
+  text-align: center;
+  color: #4d4d4d;
+  font-size: 13px;
 `;
 
 const AddTodoButton = styled.button`
-  width: 50px;
+  width: 70px;
+`
 
+const IconWrapper = styled.div`
+  display: flex;
+`;
+
+const TodoText = styled.div`
+  color: #4d4d4d;
+  font-size: 13px;
 `
 
 function Todo() {
@@ -79,7 +98,6 @@ function Todo() {
   const onChangeTodoUpdateTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const todo = e.target.value;
     setTodoItem(todo);
-    // return;
   };
 
   const clickAddTodo = () => {
@@ -97,11 +115,7 @@ function Todo() {
     axios(option).then((response) => {
       setTodo('');
       selectTodoList();
-    }).catch(error => {
-      // alert("회원가입 실패 error : " + JSON.stringify(error));
-    });
-
-
+    })
   }
 
   const selectTodoList = () => {
@@ -118,11 +132,10 @@ function Todo() {
       axios(option).then((response) => {
         setTodoList(response.data);
       }).catch(error => {
-        // alert("회원가입 실패 error : " + JSON.stringify(error));
+        alert("select todo list error" + JSON.stringify(error))
       });
     } catch (error) {
-      //응답 실패
-      // alert("회원가입 실패 error : " + JSON.stringify(error))
+      alert(error)
     }
   
   }
@@ -150,8 +163,7 @@ function Todo() {
       setIsUpdateMode(0);
       selectTodoList()
     }).catch(error => {
-      console.log(error)
-      // alert("회원가입 실패 error : " + JSON.stringify(error));
+      alert("업데이트 실패" + JSON.stringify(error));
     });
   }
 
@@ -166,24 +178,21 @@ function Todo() {
     axios(option).then((response) => {
       selectTodoList()
     }).catch(error => {
-      console.log(error)
-      // alert("회원가입 실패 error : " + JSON.stringify(error));
+      alert("삭제 실패 error : " + JSON.stringify(error));
     });
   }
 
 
    const clickCompleteTodo = (item: any) => {
     setCompleted(!item.isCompleted);
-    item.isCompleted = !item.isCompleted; 
-
+     item.isCompleted = !item.isCompleted; 
     clickSaveUpdateTodo(item, item.todo)
   }
 
 
   return (
     <Wrapper>
-      <Title>To do !</Title>
-      <AddButton>+ 할일추가</AddButton>
+      <TitleWrapper>✅ 오늘의 할 일을 적어보세요!</TitleWrapper>
 
       {/* 추가 아이템 박스 */}
       <ListItem>
@@ -192,33 +201,31 @@ function Todo() {
           name="email"
           value={todo}
           onChange={onChangeTodoTextInput}
-          placeholder="해야할 일을 작성해주세용가리"
+          placeholder="해야할 일을 작성해주세요!"
         />
 
-        <AddTodoButton onClick={clickAddTodo}>추가</AddTodoButton>
-        {/* <CheckIcon src={`${process.env.PUBLIC_URL}/icon/check-o.svg`} /> */}
+        <AddTodoButton onClick={clickAddTodo}>+ 추가</AddTodoButton>
       </ListItem>
 
     {/* 리스트 아이템 박스 */}
       {todoList &&
           todoList.map((item: any, index) =>
-        <ListItem id={item.id}>
+            <ListItem id={item.id} className={item.isCompleted ? 'is_complete' : ''}>
+              {item.isCompleted ? <CheckIcon onClick={() => clickCompleteTodo(item)} src={`${process.env.PUBLIC_URL}/icon/check-o.png`} /> : <CheckIcon onClick={() => clickCompleteTodo(item)} src={`${process.env.PUBLIC_URL}/icon/check.svg`} />}
 
-          {item.isCompleted ? <CheckIcon onClick={() => clickCompleteTodo(item)}  src={`${process.env.PUBLIC_URL}/icon/check-o.svg`} /> : <CheckIcon onClick={() => clickCompleteTodo(item)} src={`${process.env.PUBLIC_URL}/icon/check.svg`} />}
+              {is_update_id !== item.id ?
+                <TodoText>{item.todo}</TodoText> :
+                <TodoTextInput
+                  type="text"
+                  name="email"
+                  value={todoItem}
+                  onChange={onChangeTodoUpdateTextInput}
+                />}
 
-          {is_update_id !== item.id ?     
-          <span>{item.todo}</span> :    
-            <TodoTextInput
-            type="text"
-            name="email"
-            value={todoItem}
-            onChange={onChangeTodoUpdateTextInput}
-          />}
-          <div>
-            {is_update_id !== item.id ? <CheckIcon onClick={() => clickUpdateTodo(item)} src={`${process.env.PUBLIC_URL}/icon/i_fix.png`} /> : <span onClick={()=> clickSaveUpdateTodo(item)}>저장</span>}&nbsp;
-
-            <CheckIcon onClick={() => clickDeleteTodo(item)} src={`${process.env.PUBLIC_URL}/icon/i_delete.png`} />
-          </div>
+              <IconWrapper>
+                {is_update_id !== item.id ? <CheckIcon onClick={() => clickUpdateTodo(item)} src={`${process.env.PUBLIC_URL}/icon/i_fix.png`} /> : <CheckIcon onClick={() => clickSaveUpdateTodo(item)} src={`${process.env.PUBLIC_URL}/icon/i_save.png`} />}
+                <CheckIcon onClick={() => clickDeleteTodo(item)} src={`${process.env.PUBLIC_URL}/icon/i_delete.png`} />
+              </IconWrapper>
         </ListItem>
     )}
     </Wrapper>
