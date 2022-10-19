@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { api_url } from "../Components/components";
 
 const Wrapper = styled.div`
   /* text-align: center; */
@@ -64,6 +66,7 @@ const TodoText = styled.div`
 `
 
 function Todo() {
+  const history = useHistory();
   // 추가하는 새로운 투두 값
   const [todo, setTodo] = useState('');
 
@@ -72,7 +75,6 @@ function Todo() {
   const [is_update_id, setIsUpdateMode] = useState(0);
 
   const [isCompleted, setCompleted] = useState(false);
-
   const [todoList, setTodoList] = useState([
     {
       id: 0,
@@ -84,6 +86,16 @@ function Todo() {
   ]);
 
   const access_token = localStorage.getItem('access_token');
+
+  useEffect(() => {
+    const is_access_token = localStorage.getItem('access_token')
+    if (!is_access_token) {
+      alert("접근할 수 없습니다! 로그인 해주세요 :)")
+      history.push('/');
+      return;
+    }
+  }, []);
+
 
   useEffect(() => {
     selectTodoList();
@@ -102,7 +114,7 @@ function Todo() {
 
   const clickAddTodo = () => {
     const option = {
-      url: "https://pre-onboarding-selection-task.shop/todos",
+      url: `${api_url}/todos`,
       method: "POST",
       headers: {
         "Authorization": `Bearer ${access_token}`,
@@ -121,7 +133,7 @@ function Todo() {
   const selectTodoList = () => {
     try {
       const option = {
-        url: "https://pre-onboarding-selection-task.shop/todos",
+        url: `${api_url}/todos`,
         method: "GET",
         headers: {
           "Authorization": `Bearer ${access_token}`,
@@ -147,7 +159,7 @@ function Todo() {
 
   const clickSaveUpdateTodo = (item: any, todo?: any) => {
     const option = {
-      url: `https://pre-onboarding-selection-task.shop/todos/${item.id}`,
+      url: `${api_url}/todos/${item.id}`,
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${access_token}`,
@@ -159,7 +171,6 @@ function Todo() {
       }
     };
     axios(option).then((response) => {
-      console.log(response.data);
       setIsUpdateMode(0);
       selectTodoList()
     }).catch(error => {
@@ -169,7 +180,7 @@ function Todo() {
 
   const clickDeleteTodo = (item: any) => {
     const option = {
-      url: `https://pre-onboarding-selection-task.shop/todos/${item.id}`,
+      url: `${api_url}/todos/${item.id}`,
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${access_token}`

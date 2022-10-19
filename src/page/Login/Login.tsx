@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { api_url } from "../Components/components";
 
 const Wrapper = styled.div`
   padding-top: 30px;
@@ -66,7 +67,6 @@ const ErrorText = styled.div`
 
 function Login() {
   const history = useHistory();
-  const api_url = "https://pre-onboarding-selection-task.shop";
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -110,7 +110,6 @@ function Login() {
         alert("로그인 성공! 환영합니다 😃");
         history.push('/todo')
       }).catch(error => {
-        console.log(error)
         if (error.code == "ERR_BAD_REQUEST") {
           setIsLoginError(true);
         }

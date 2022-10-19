@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { api_url } from "../Components/components";
 
 const Wrapper = styled.div`
   padding-top: 30px;
@@ -87,7 +88,7 @@ function SignUp() {
   const clickSignUp = () => {
     try {
       const option = {
-        url: " https://pre-onboarding-selection-task.shop/auth/signup",
+        url: `${api_url}/auth/signup`,
         method: "POST",
         header: {
           "Content-Type": "application/json",
