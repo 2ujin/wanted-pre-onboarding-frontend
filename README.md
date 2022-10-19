@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# ✅ wanted-pre-onboarding-frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+원티드 프리온보딩 프론트엔드 과정 선발 과제를 위한 레포지토리 입니다.
 
-## Available Scripts
+[🔗 해당 링크 클릭시 이동합니다!](https://wanted-pre-onboarding-frontend-puce.vercel.app/)
 
-In the project directory, you can run:
+## 실행
 
-### `npm start`
+```bash
+#설치
+npm run install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#실행
+npm run start
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 스크린샷
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+****:: 1. 로그인 / 회원가입****
 
-### `npm run build`
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/aee45afa-1612-4a0c-b664-7d3b9894c186/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221019%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T131415Z&X-Amz-Expires=86400&X-Amz-Signature=6124da74f3d8bf88f90c5c770a82cfa4716856b21809340508c8a95b0aff0a72&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/dcb5e99c-161e-4d8c-983d-833de12b0c1a/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221019%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T131524Z&X-Amz-Expires=86400&X-Amz-Signature=13536955f2f4a621fe385a96c6c1aa208c6edd39b59660c3c4e27e0170d8fcfb&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 이메일, 비밀번호 유효성 검사
+    - 이메일 : @ 포함
+    - 비밀번호 : 8글자 이상
+- 모든 조건에 해당될 경우에만 로그인/회원가입 버튼 활성화 되도록
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**:: 2.투두리스트**
 
-### `npm run eject`
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ffcaece5-9f38-41eb-98d9-83bff2ad7e01/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221019%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T131543Z&X-Amz-Expires=86400&X-Amz-Signature=8a5de2fd4a7cb2e006283453ef6fd08cccbce444f65c0e577d93c5ea7c796438&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 새로운 투두 추가
+- 투두 수정 및 저장
+- 투두 제거
+- 투두 완료처리
+- 로그인 안했을 경우 투두 페이지 접속 불가
